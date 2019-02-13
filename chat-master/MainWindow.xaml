@@ -33,8 +33,11 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="2" FontSize="50" Foreground="#FFF" HorizontalAlignment="Center">WPF 1</TextBlock>
-        <ListBox Grid.Column="0" Name="listMsg" ItemsSource="{Binding contactList}" DisplayMemberPath="nickname" Background="Blue">
+        <ListBox Grid.Column="0" Name="contact" ItemsSource="{Binding contactList}" DisplayMemberPath="nickname" Background="Blue">
             
+        </ListBox>
+        <ListBox Grid.Column="1" Name="listMsg" ItemsSource="{Binding ElementName=contact, Path=SelectedItem.messageList}" Background="Gray">
+
         </ListBox>
         <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource textStyleTextBlock}">Nom</TextBlock>
         <TextBox  Name="name" Height="23" Margin="0,50,0,0" Grid.Column="1" Grid.Row="1" Style="{StaticResource textStyleTextBox}"
