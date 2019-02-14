@@ -21,6 +21,23 @@ namespace WpfApp1
             contactList.Add(p2);
         }
 
+
+        public void addContact(string nom)
+        {
+            if(contactList == null)
+            {
+                contactList = new ObservableCollection<Personne>();
+            }
+            Personne newP = new Personne(contactList.Count(), nom);
+            contactList.Add(newP);
+        }
+
+     public void sendMessage(Personne from, Personne to,string msg)
+        {
+            to.addMessage(msg);
+
+        }
+
         
 
     }

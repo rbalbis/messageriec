@@ -36,6 +36,18 @@
         <ListBox Grid.Column="0" Name="contact" ItemsSource="{Binding contactList}" DisplayMemberPath="nickname" Background="Blue">
             
         </ListBox>
+        <Popup Name="popup"  PlacementTarget="{Binding ElementName=btnadd}" Placement="Bottom"  Width="200" Height="100" Margin="0,20,0,0">
+            <Grid>
+                <StackPanel>
+                    <TextBox Name="addContactName" VerticalAlignment="Center" Margin="15,10,15,0"/>
+                    <Button Click="addContactOkPopup">ok</Button>
+                </StackPanel>
+            </Grid>
+                
+            
+           
+        </Popup>
+        <Button Name="btnadd" Grid.Column="0" Grid.Row="1" Background="Green" Click="addContact">Add Contact</Button>
         <ListBox Grid.Column="1" Name="listMsg" ItemsSource="{Binding ElementName=contact, Path=SelectedItem.messageList}" Background="Gray">
 
         </ListBox>
@@ -47,9 +59,9 @@
                         UpdateSourceTrigger=PropertyChanged}"
                 Background="{Binding ElementName=listBox, Path=SelectedItem.Content,Mode=OneWay}">
         </TextBox>
-        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource textStyleTextBlock}">Age</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource textStyleTextBlock}">1</TextBlock>
         
-        <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource textStyleTextBlock}" Grid.ColumnSpan="2">Bio</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource textStyleTextBlock}" Grid.ColumnSpan="2">2</TextBlock>
         <TextBox  Name="bio" Height="50" Margin="0,50,0,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource textStyleTextBox}"
                 Text ="{Binding ElementName=listBox,
                         Path=SelectedItem.Content,

@@ -28,6 +28,18 @@ namespace WpfApp1
             DataContext = vm;  
             InitializeComponent();
         }
+
+        public void addContact(object sender, RoutedEventArgs e)
+        {
+            popup.IsOpen = true;
+            
+        }
+        public void addContactOkPopup(object sender, RoutedEventArgs e)
+        {
+
+            vm.addContact(addContactName.Text);
+            popup.IsOpen = false;
+        }
     }
 }
 

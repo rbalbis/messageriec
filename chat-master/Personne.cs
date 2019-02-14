@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
+
     public class Personne
     {
         public string nickname { get; set; }
@@ -25,6 +26,11 @@ namespace WpfApp1
             this.nickname = nick;
             this.messageList = msglist;
 
+        }
+
+        public void addMessage(string msg)
+        {
+            this.messageList.Add(msg);
         }
     }
 }
