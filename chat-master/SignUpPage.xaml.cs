@@ -97,6 +97,15 @@ namespace WpfApp1
                 IRestResponse response = client.Execute(request);
                 var content = response.Content;
                 Console.WriteLine(content);
+                if(content == null || content == "")
+                {
+                    MessageBox.Show("Sorry! user name is already existed.");
+
+                }
+                else
+                {
+                    NavigationService.Navigate(new Uri("/Login.xaml", UriKind.Relative));
+                }
             }
             else
             {

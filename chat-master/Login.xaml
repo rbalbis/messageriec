@@ -7,12 +7,27 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Login">
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="TabButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#ea4c88" BorderBrush="#ea4c88" BorderThickness="10,10,10,10" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid x:Name="LayoutRoot" Margin="50">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <Border BorderBrush="#FF000000" BorderThickness="1" CornerRadius="18" Background="#2C3338" >
+            <StackPanel Grid.Row="0" Margin="12,17,0,28" >
             <!--Title-->
             <TextBlock Text="Login Page" Foreground="Black" FontSize="40"/>
 
@@ -25,12 +40,14 @@
             <PasswordBox BorderBrush="LightGray" Name="PassWord" GotFocus="UserName_GotFocus" />
 
             <!--Login Button-->
-            <Button Content="Login" Background="#FF30DABB" Name="LoginButton" Click="Login_Click" />
+                <Button Style="{StaticResource TabButton}" Content="Login" Background="#ea4c88" Name="LoginButton" Click="Login_Click"  Margin="50,20,50,20"/>
 
             <!--  Registration Button-->
-            <Button Content="Registration" Background="#FF30DABB" Name="SignUp" Click="SignUp_Click"/>
+                <Button Style="{StaticResource TabButton}" Content="Registration" Background="#ea4c88" Name="SignUp" Click="SignUp_Click" Margin="50,10,50,20"/>
 
         </StackPanel>
+    </Border>
 
     </Grid>
+
 </Page>

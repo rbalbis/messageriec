@@ -7,59 +7,55 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SignUpPage">
-    <Grid x:Name="LayoutRoot" Background="White">
-
-        <Grid Margin="5,0,0,0">
-
-            <Grid.RowDefinitions>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-                <RowDefinition Height="Auto"/>
-
-            </Grid.RowDefinitions>
-
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="TabButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#ea4c88" BorderBrush="#ea4c88" BorderThickness="10,10,10,10" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid x:Name="LayoutRoot" Margin="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+     
             <!--Title-->
 
-            <TextBlock Text="User Registration :" Grid.Row="0" FontSize="40"  Foreground="Black"/>
+        <Border BorderBrush="#FF000000" BorderThickness="1" CornerRadius="18" Background="#2C3338" >
+            <StackPanel Grid.Row="0" Margin="12,17,0,28" >
+                <TextBlock Text="User Registration :" Grid.Row="0" FontSize="40"  Foreground="Black"/>
 
 
 
-            <!--UserName-->
+                <!--UserName-->
 
-            <TextBlock Text="UserName :" Grid.Row="1" Foreground="Black"   Margin="0,25,0,0"/>
+                <TextBlock Text="UserName :" Grid.Row="1" Foreground="Black"   Margin="0,25,0,0"/>
 
-            <TextBox Name="TxtUserName" BorderBrush="LightGray" Grid.Row="1" Margin="100,0,0,0" GotFocus="Txt_GotFocus"/>
-
-
-
-            <!--Password-->
-
-            <TextBlock Text="Password: " Grid.Row="2" Margin="0,25,0,0" Foreground="Black" />
-
-            <PasswordBox Name="TxtPwd" BorderBrush="LightGray" Grid.Row="2" Margin="100,0,0,0" GotFocus="pwd_GotFocus" />
+                <TextBox Name="TxtUserName" BorderBrush="LightGray" Grid.Row="1" Margin="100,0,0,0" GotFocus="Txt_GotFocus"/>
 
 
 
-            <!--Submit Button-->
+                <!--Password-->
 
-            <Button BorderBrush="Transparent"  Background="#FF30DABB" Content="Submit"  Name="BtnSubmit" Click="Submit_Click" Grid.Row="7"/>
+                <TextBlock Text="Password: " Grid.Row="2" Margin="0,25,0,0" Foreground="Black" />
+
+                <PasswordBox Name="TxtPwd" BorderBrush="LightGray" Grid.Row="2" Margin="100,0,0,0" GotFocus="pwd_GotFocus" />
 
 
 
-        </Grid>
+                <!--Submit Button-->
 
+                <Button Style="{StaticResource TabButton}" BorderBrush="Transparent"  Background="#FF30DABB" Content="Submit"  Name="BtnSubmit" Click="Submit_Click" Margin="50,10,50,20"/>
+            </StackPanel>
+        </Border>
     </Grid>
+
 </Page>

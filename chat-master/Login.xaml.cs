@@ -57,7 +57,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    MessageBox.Show("Identitfiant correct");
+                    NavigationService.Navigate(new Uri("/MainWindow.xaml", UriKind.Relative));
 
                 }
             }
