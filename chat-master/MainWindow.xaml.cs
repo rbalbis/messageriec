@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace WpfApp1
 {
@@ -40,6 +43,25 @@ namespace WpfApp1
             vm.addContact(addContactName.Text);
             popup.IsOpen = false;
         }
+    public void GetContact()
+    {
+            String BASE_URL = "http://baobab.tokidev.fr/";
+            WebRequest request = WebRequest.Create(BASE_URL + "api/fetchMessages");
+            request.Method = "GET";
+            WebResponse dataStream = request.GetResponse();
+            Stream responseStream = dataStream.GetResponseStream();
+            XmlTextReader reader = new XmlTextReader(responseStream);
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Text)
+                    Console.WriteLine("{0}", reader.Value.Trim());
+            }
+
+            Console.ReadLine();
+            dataStream.Close();
+
+        }
     }
+
 }
 
