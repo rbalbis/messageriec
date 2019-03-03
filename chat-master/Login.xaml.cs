@@ -21,7 +21,7 @@ namespace WpfApp1
     /// <summary>
     /// Logique d'interaction pour Login.xaml
     /// </summary>
-    public partial class Login : Page
+    public partial class Login : Window
     {
         //IsolatedStorageFile ISOFile = IsolatedStorageFile.GetUserStoreForApplication();
         List<UserData> ObjUserDataList = new List<UserData>();
@@ -57,7 +57,10 @@ namespace WpfApp1
                 }
                 else
                 {
-                    NavigationService.Navigate(new Uri("/MainWindow.xaml", UriKind.Relative));
+                    var newPage = new MainWindow();
+                    newPage.Show();
+                    this.Close();
+                    //NavigationService.Navigate(new UriB T4 ("/MainWindow.xaml", UriKind.Relative));
 
                 }
             }
@@ -70,7 +73,10 @@ namespace WpfApp1
 
         public void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/SignUpPage.xaml", UriKind.Relative));
+            var newPage = new SignUpPage();
+            newPage.Show();
+            this.Close();
+            //NavigationService.Navigate(new Uri("/SignUpPage.xaml", UriKind.Relative));
         }
         //protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         //{

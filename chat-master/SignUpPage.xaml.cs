@@ -24,7 +24,7 @@ namespace WpfApp1
     /// <summary>
     /// Logique d'interaction pour SignUpPage.xaml
     /// </summary>
-    public partial class SignUpPage : Page
+    public partial class SignUpPage : Window
     {
         string gender = "";
 
@@ -104,7 +104,10 @@ namespace WpfApp1
                 }
                 else
                 {
-                    NavigationService.Navigate(new Uri("/Login.xaml", UriKind.Relative));
+                    var newPage = new Login();
+                    newPage.Show();
+                    this.Close();
+                    //NavigationService.Navigate(new Uri("/Login.xaml", UriKind.Relative));
                 }
             }
             else
