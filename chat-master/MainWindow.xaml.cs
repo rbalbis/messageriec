@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using RestSharp;
+
 
 namespace WpfApp1
 {
@@ -42,6 +44,48 @@ namespace WpfApp1
 
             vm.addContact(addContactName.Text);
             popup.IsOpen = false;
+        }
+
+        public void send(object sender, RoutedEventArgs e)
+        {
+            Object receiver = contact.SelectedItem;
+            Personne personne = null;
+            if (receiver != null)
+            {
+                personne = (Personne) receiver;
+            }
+            if(personne != null)
+            {
+
+            
+                Console.WriteLine("{0} , {1}", personne.nickname, messageContent.Text);
+            String BASE_URL = "http://baobab.tokidev.fr/";
+
+            var client = new RestClient(BASE_URL);
+
+            var request = new RestRequest("api/sendMsg", Method.POST);
+
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(new
+            {
+                message = messageContent.Text,
+                receiver = personne.nickname
+            });
+
+            IRestResponse response = client.Execute(request);
+                var content = response.Content;
+                Console.WriteLine(content);
+                if (content == null || content == "")
+                {
+                    MessageBox.Show("Error.");
+
+                }
+                else
+                {
+                    Console.WriteLine("{0}", content);
+
+                }
+            }
         }
     public void GetContact()
     {

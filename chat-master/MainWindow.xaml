@@ -23,13 +23,13 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="AntiqueWhite">
+    <Grid Background="Red">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*" />
+            <RowDefinition Height="3*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="2" FontSize="50" Foreground="#FFF" HorizontalAlignment="Center">WPF 1</TextBlock>
@@ -51,7 +51,7 @@
         <ListBox Grid.Column="1" Name="listMsg" ItemsSource="{Binding ElementName=contact, Path=SelectedItem.messageList}" Background="Gray">
 
         </ListBox>
-        <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource textStyleTextBlock}">Nom</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource textStyleTextBlock}"></TextBlock>
         <TextBox  Name="name" Height="23" Margin="0,50,0,0" Grid.Column="1" Grid.Row="1" Style="{StaticResource textStyleTextBox}"
                 Text ="{Binding ElementName=listBox,
                         Path=SelectedItem.Content,
@@ -59,15 +59,22 @@
                         UpdateSourceTrigger=PropertyChanged}"
                 Background="{Binding ElementName=listBox, Path=SelectedItem.Content,Mode=OneWay}">
         </TextBox>
-        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource textStyleTextBlock}">1</TextBlock>
-        
-        <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource textStyleTextBlock}" Grid.ColumnSpan="2">2</TextBlock>
-        <TextBox  Name="bio" Height="50" Margin="0,50,0,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource textStyleTextBox}"
+        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource textStyleTextBlock}">
+            
+        </TextBlock>
+
+        <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource textStyleTextBlock}" Grid.ColumnSpan="2">Message : </TextBlock>
+     
+
+        <Button Name="btnAddMessage" Grid.Column="2" Grid.Row="1" Background="Blue" Click="send">Send</Button>
+        <TextBox  Name="messageContent" Height="50" Margin="0,80,0,0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource textStyleTextBox}"
                 Text ="{Binding ElementName=listBox,
                         Path=SelectedItem.Content,
                         Mode=OneWay,
                         UpdateSourceTrigger=PropertyChanged}"
-                Background="{Binding ElementName=listBox, Path=SelectedItem.Content,Mode=OneWay}">
+                Background="Black">
+            
+
         </TextBox>
     </Grid>
 
