@@ -57,7 +57,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    var newPage = new MainWindow();
+                    var newPage = new MainWindow(content);
                     newPage.Show();
                     this.Close();
                     //NavigationService.Navigate(new UriB T4 ("/MainWindow.xaml", UriKind.Relative));
