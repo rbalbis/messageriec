@@ -17,7 +17,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using RestSharp;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
 
 namespace WpfApp1
 {
@@ -29,12 +32,14 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
     String token = "";
-        VMPersonneMessage vm = new VMPersonneMessage();
+        ObservableCollection<String> contactsList = new ObservableCollection<String>();
+        VMPersonneMessage vm;
         public MainWindow(String user)
         {
             Console.WriteLine("User : {0}", user);
             dynamic jsonUser = JObject.Parse(user);
             token = jsonUser["access_token"];
+            vm = new VMPersonneMessage(token);
             Console.WriteLine("token : {0}", token);
             DataContext = vm;  
             InitializeComponent();
@@ -120,9 +125,25 @@ namespace WpfApp1
             }
             else
             {
+                HashSet<String> contacts = new HashSet<String>();
                 Console.WriteLine("{0}", content);
-                //vm.contactList = JObject.Parse(content);
+                JArray contact = (JArray) JsonConvert.DeserializeObject(content);
+                foreach(var con in contact)
+                {
+                    contacts.Add((String) con["author"]);
+                }
+                foreach (var con in contacts)
+                {
+                    contactsList.Add(con);
+                }
                 
+                Console.WriteLine("{0}", contactsList);
+                foreach(var c in contactsList)
+                {
+                    Console.WriteLine("{0}", c);
+                }
+                //vm.contactList = JObject.Parse(content);
+
 
             }
 
