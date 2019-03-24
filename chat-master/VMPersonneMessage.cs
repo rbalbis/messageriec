@@ -42,6 +42,10 @@ namespace WpfApp1
         private dynamic jsonUser;
         public ObservableCollection<Personne> contactList { get; set; }
 
+        private static string _privateKey;
+        private static string _publicKey;
+
+
         public VMPersonneMessage(String token, string user)
         {
             db = new Database();
@@ -70,6 +74,10 @@ namespace WpfApp1
             GetContact();
         }
 
+        public string getPubK()
+        {
+            return _publicKey;
+        }
 
         public void addContact(string nom)
         {
@@ -147,8 +155,6 @@ namespace WpfApp1
 
         }
 
-        private static string _privateKey;
-        private static string _publicKey;
         private static UnicodeEncoding _encoder = new UnicodeEncoding();
 
         private static void RSA()
@@ -167,7 +173,7 @@ namespace WpfApp1
     */
         }
 
-        public static string Decrypt(string data)
+        public string Decrypt(string data)
         {
             var rsa = new RSACryptoServiceProvider();
             var dataArray = data.Split(new char[] { ',' });
@@ -182,7 +188,7 @@ namespace WpfApp1
             return _encoder.GetString(decryptedByte);
         }
 
-        public static string Encrypt(string data)
+        public string Encrypt(string data)
         {
             var rsa = new RSACryptoServiceProvider();
             rsa.FromXmlString(_publicKey);

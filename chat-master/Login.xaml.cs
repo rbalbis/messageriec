@@ -50,7 +50,6 @@ namespace WpfApp1
 
                 IRestResponse response = client.Execute(request);
                 var content = response.Content;
-                Console.WriteLine(content);
                 if (content == null || content == "")
                 {
                     MessageBox.Show("Enter UserID/Password");

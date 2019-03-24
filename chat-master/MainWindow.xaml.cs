@@ -34,6 +34,8 @@ namespace WpfApp1
     String token = "";
         ObservableCollection<String> contactsList = new ObservableCollection<String>();
         VMPersonneMessage vm;
+        string privk;
+        string pubk;
         public MainWindow(String user)
         {
             dynamic jsonUser = JObject.Parse(user);
@@ -42,6 +44,7 @@ namespace WpfApp1
             DataContext = vm;  
             InitializeComponent();
             GetContact();
+            
         }
 
         public void addContact(object sender, RoutedEventArgs e)
@@ -51,12 +54,38 @@ namespace WpfApp1
         }
         public void addContactOkPopup(object sender, RoutedEventArgs e)
         {
+            Object receiver = contact.SelectedItem;
+            Personne personne = null;
+            if (receiver != null)
+            {
+                personne = (Personne)receiver;
+            }
+            if (personne != null)
+            {
 
+
+                String BASE_URL = "http://baobab.tokidev.fr/";
+
+                var client = new RestClient(BASE_URL);
+
+                var request = new RestRequest("api/sendMsg", Method.POST);
+
+                request.AddHeader("Accept", "application/json");
+                request.AddHeader("Authorization", "Bearer " + token);
+
+
+                request.AddJsonBody(new
+                {
+                    message = vm.getPubK(),
+                    receiver = personne.nickname
+                });
+
+            }
             vm.addContact(addContactName.Text);
             popup.IsOpen = false;
         }
 
-        public void send(object sender, RoutedEventArgs e)
+            public void send(object sender, RoutedEventArgs e)
         {
             Object receiver = contact.SelectedItem;
             Personne personne = null;
@@ -80,7 +109,7 @@ namespace WpfApp1
 
             request.AddJsonBody(new
             {
-                message = messageContent.Text,
+                message = vm.Encrypt(messageContent.Text),
                 receiver = personne.nickname
             });
 
