@@ -36,11 +36,9 @@ namespace WpfApp1
         VMPersonneMessage vm;
         public MainWindow(String user)
         {
-            Console.WriteLine("User : {0}", user);
             dynamic jsonUser = JObject.Parse(user);
             token = jsonUser["access_token"];
-            vm = new VMPersonneMessage(token);
-            Console.WriteLine("token : {0}", token);
+            vm = new VMPersonneMessage(token, user);
             DataContext = vm;  
             InitializeComponent();
             GetContact();
@@ -70,7 +68,6 @@ namespace WpfApp1
             {
 
             
-                Console.WriteLine("{0} , {1}", personne.nickname, messageContent.Text);
             String BASE_URL = "http://baobab.tokidev.fr/";
 
             var client = new RestClient(BASE_URL);
@@ -89,7 +86,6 @@ namespace WpfApp1
 
             IRestResponse response = client.Execute(request);
                 var content = response.Content;
-                Console.WriteLine(content);
                 if (content == null || content == "")
                 {
                     MessageBox.Show("Error.");
@@ -97,7 +93,6 @@ namespace WpfApp1
                 }
                 else
                 {
-                    Console.WriteLine("{0}", content);
 
                 }
             }
@@ -117,7 +112,6 @@ namespace WpfApp1
 
             IRestResponse response = client.Execute(request);
             var content = response.Content;
-            Console.WriteLine(content);
             if (content == null || content == "")
             {
                 MessageBox.Show("Error.");
@@ -126,7 +120,6 @@ namespace WpfApp1
             else
             {
                 HashSet<String> contacts = new HashSet<String>();
-                Console.WriteLine("{0}", content);
                 JArray contact = (JArray) JsonConvert.DeserializeObject(content);
                 foreach(var con in contact)
                 {
@@ -137,11 +130,6 @@ namespace WpfApp1
                     contactsList.Add(con);
                 }
                 
-                Console.WriteLine("{0}", contactsList);
-                foreach(var c in contactsList)
-                {
-                    Console.WriteLine("{0}", c);
-                }
                 //vm.contactList = JObject.Parse(content);
 
 

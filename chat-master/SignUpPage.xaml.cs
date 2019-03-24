@@ -79,7 +79,6 @@ namespace WpfApp1
             //After validation success ,store user detials in isolated storage
             else if (TxtUserName.Text != "" && TxtPwd.Password != "")
             {
-                Console.WriteLine(TxtUserName.Text);
 
                 String BASE_URL = "http://baobab.tokidev.fr/";
 
@@ -96,10 +95,9 @@ namespace WpfApp1
 
                 IRestResponse response = client.Execute(request);
                 var content = response.Content;
-                Console.WriteLine(content);
                 if(content == null || content == "")
                 {
-                    MessageBox.Show("Sorry! user name is already existed.");
+                    MessageBox.Show("Sorry! user name already exist.");
 
                 }
                 else

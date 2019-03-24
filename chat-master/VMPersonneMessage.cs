@@ -26,22 +26,46 @@ using RestSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WpfApp1
 {
     public class VMPersonneMessage
     {
+        private Database db;
+
         int id = 0;
         String token = "";
+        private dynamic jsonUser;
         public ObservableCollection<Personne> contactList { get; set; }
 
-        public VMPersonneMessage(String token)
+        public VMPersonneMessage(String token, string user)
         {
+            db = new Database();
+
+            db.Test(db.GetConn());
+
+            jsonUser = JObject.Parse(user);
+
+            string username = jsonUser["username"];
+
+            string key = db.userKey(username);
+
+            if(key == ""){
+                RSA();
+                db.insertUser(username, _privateKey, _publicKey);
+            }
+            else {
+                _privateKey = key;
+                _publicKey = db.userPubKey(username);
+
+                System.Console.WriteLine("aaaaaaaaaaaaaaaa");
+                System.Console.WriteLine(key); }
+
             contactList = new ObservableCollection<Personne>();
-            //Personne p1 = new Personne(1, "mich", new List<string> { "hello", "hi", "ho" });
-            //Personne p2 = new Personne(2, "didier", new List<string> { "Salut c didier", "hai" });
-            //contactList.Add(p1);
-            //contactList.Add(p2);
             this.token = token;
             GetContact();
         }
@@ -73,7 +97,6 @@ namespace WpfApp1
 
             IRestResponse response = client.Execute(request);
             var content = response.Content;
-            Console.WriteLine(content);
             if (content == null || content == "")
             {
                 MessageBox.Show("Error.");
@@ -82,7 +105,6 @@ namespace WpfApp1
             else
             {
                 HashSet<String> contacts = new HashSet<String>();
-                Console.WriteLine("{0}", content);
                 JArray contact = (JArray)JsonConvert.DeserializeObject(content);
                 foreach (var con in contact)
                 {
@@ -98,37 +120,12 @@ namespace WpfApp1
                     }
                     
                     id++;
-                    //contacts.Add((String)con["author"]);
                 }
-                //foreach (var name in contacts)
-                //{
-                    
-                //}
-
-                Console.WriteLine("{0}", contactList);
-                foreach (var c in contactList)
-                {
-                    Console.WriteLine("{0}", c);
-                }
-                //vm.contactList = JObject.Parse(content);
-
+    
 
             }
 
-            //String BASE_URL = "http://baobab.tokidev.fr/";
-            //WebRequest request = WebRequest.Create(BASE_URL + "api/fetchMessages");
-            //request.Method = "GET";
-            //WebResponse dataStream = request.GetResponse();
-            //Stream responseStream = dataStream.GetResponseStream();
-            //XmlTextReader reader = new XmlTextReader(responseStream);
-            //while (reader.Read())
-            //{
-            //    if (reader.NodeType == XmlNodeType.Text)
-            //        Console.WriteLine("Message : {0}", reader.Value.Trim());
-            //}
-
-            //Console.ReadLine();
-            //dataStream.Close();
+         
 
         }
 
@@ -150,7 +147,63 @@ namespace WpfApp1
 
         }
 
-        
+        private static string _privateKey;
+        private static string _publicKey;
+        private static UnicodeEncoding _encoder = new UnicodeEncoding();
+
+        private static void RSA()
+        {
+            var rsa = new RSACryptoServiceProvider();
+            _privateKey = rsa.ToXmlString(true);
+            _publicKey = rsa.ToXmlString(false);
+
+           /* var text = "Test1";
+            Console.WriteLine("RSA // Text to encrypt: " + text);
+            var enc = Encrypt(text);
+            Console.WriteLine("RSA // Encrypted Text: " + enc);
+            var dec = Decrypt(enc);
+            Console.WriteLine("RSA // Decrypted Text: " + dec);
+
+    */
+        }
+
+        public static string Decrypt(string data)
+        {
+            var rsa = new RSACryptoServiceProvider();
+            var dataArray = data.Split(new char[] { ',' });
+            byte[] dataByte = new byte[dataArray.Length];
+            for (int i = 0; i < dataArray.Length; i++)
+            {
+                dataByte[i] = Convert.ToByte(dataArray[i]);
+            }
+
+            rsa.FromXmlString(_privateKey);
+            var decryptedByte = rsa.Decrypt(dataByte, false);
+            return _encoder.GetString(decryptedByte);
+        }
+
+        public static string Encrypt(string data)
+        {
+            var rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(_publicKey);
+            var dataToEncrypt = _encoder.GetBytes(data);
+            var encryptedByteArray = rsa.Encrypt(dataToEncrypt, false).ToArray();
+            var length = encryptedByteArray.Count();
+            var item = 0;
+            var sb = new StringBuilder();
+            foreach (var x in encryptedByteArray)
+            {
+                item++;
+                sb.Append(x);
+
+                if (item < length)
+                    sb.Append(",");
+            }
+
+            return sb.ToString();
+        }
+
+
 
     }
 }
